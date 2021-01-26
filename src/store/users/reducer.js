@@ -1,7 +1,13 @@
 import * as types from './action-types';
 
+const ITEMS_PER_PAGE = 6;
 const initialState = {
     data: [],
+    pagination: {
+        page: 0, 
+        per_page: ITEMS_PER_PAGE,
+        total_pages: null
+    },    
     loading: false
 };
 
@@ -16,7 +22,7 @@ export default (state = initialState, action = {}) => {
             return {
                 ...state,
                 loading: false,
-                data: action.data
+                ...action.payload
             };
         case types.FAILURE:
             return {
