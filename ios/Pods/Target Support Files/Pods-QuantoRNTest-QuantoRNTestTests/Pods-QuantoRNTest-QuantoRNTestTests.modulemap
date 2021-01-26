@@ -1,0 +1,6 @@
+module Pods_QuantoRNTest_QuantoRNTestTests {
+  umbrella header "Pods-QuantoRNTest-QuantoRNTestTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
