@@ -5,11 +5,11 @@ export function requestUsers() {
     return (dispatch, getState) => {
         const { USERS } = getState()
         let pagination = USERS.pagination
-        dispatch({
-            type: types.REQUEST,
-        });
         //Only do request when current page not yet total_pages
         if (pagination.page <= pagination.total_pages || pagination.total_pages === null) {
+            dispatch({
+                type: types.REQUEST,
+            });
             pagination.page++
             getUsers(pagination)
                 .then((response) => {
