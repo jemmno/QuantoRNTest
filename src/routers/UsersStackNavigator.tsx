@@ -1,7 +1,9 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { UserListScreen } from '../screens/users/users-list.screen';
+import { UserListScreen } from '../screens/users/user-list/users-list.screen';
+import { UserDetailScreen } from '../screens/users/user-detail/users-detail.screen';
 import Theme from '../config/Theme';
+import { USERDETAIL, USERSLIST } from './constants';
 
 const UsersStack = createStackNavigator();
 
@@ -14,7 +16,7 @@ export const UsersStackNavigator = () : React.ReactElement =>
       },
       headerTintColor: Theme.navTitle,
     }}>
-      <UsersStack.Screen name="Listado de usuarios" component={UserListScreen} />
-      <UsersStack.Screen name="Detalle de usuario" component={UserListScreen} />
+      <UsersStack.Screen name={USERSLIST} component={UserListScreen} />
+      <UsersStack.Screen name={USERDETAIL} component={UserDetailScreen} options={{headerLeft: () => {return null}}}/>
     </UsersStack.Navigator>
   );

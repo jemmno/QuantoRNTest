@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
-import User from '../../models/user';
-import { Avatar } from '../../components/Avatar';
+import { Avatar } from '../../../components/Avatar';
+import User from '../../../models/user';
 
 interface Props {
     user: User,

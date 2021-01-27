@@ -2,26 +2,30 @@ import React, { useEffect } from 'react';
 import { ActivityIndicator, Button, StyleSheet, Text, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import ListEmpty from '../../components/ListEmpty';
-import User from '../../models/user';
-import user from '../../models/user';
-import { requestUsers } from '../../store/users/actions';
+import ListEmpty from '../../../components/ListEmpty';
+import User from '../../../models/user';
+import user from '../../../models/user';
+import { requestUsers } from '../../../store/users/actions';
 import { UserListItem } from './user-list-item.component';
+import { useNavigation } from '@react-navigation/native';
+import { USERDETAIL } from '../../../routers/constants';
 
 export const UserListScreen = (): React.ReactElement => {
     const dispatch = useDispatch();
+    const navigation = useNavigation();
     const { data, loading } = useSelector((state: any) => state.USERS);
     const getUsers = () => (dispatch(requestUsers()))
 
     useEffect(() => {
         getUsers()
     }, [])
-    // return(<Button onPress={() => dispatch(requestUsers())} title="sdf"/>)
+
     const keyExtractor = (_item: any, index: { toString: () => any; }) => index.toString();
 
     const handleOnPressUser = (user: User) => {
-        console.log("On press", user)
+        navigation.navigate(USERDETAIL, { user })
     }
+    
     const renderItem = (item: { item: JSX.IntrinsicAttributes & user; }) => {
         return <UserListItem user={item.item} onPressUser={handleOnPressUser}/>
     }
