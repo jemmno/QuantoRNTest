@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { ActivityIndicator, Button, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Text, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import User, { iUser } from '../../../models/user';
@@ -13,7 +13,7 @@ import { ListEmpty } from '../../../components/ListEmpty';
 export const UserListScreen = (): React.ReactElement => {
     const dispatch = useDispatch();
     const navigation = useNavigation();
-    const { data, loading, errorMessage } = useSelector((state: any) => state.USERS);
+    const { data, loading, errorMessage } = useSelector((state: any) => state.USERS.LIST);
     const getUsers = () => (dispatch(requestUsers()))
 
     useEffect(() => {
@@ -23,7 +23,7 @@ export const UserListScreen = (): React.ReactElement => {
     const keyExtractor = (_item: any, index: { toString: () => any; }) => index.toString();
 
     const handleOnPressUser = (user: iUser) => {
-        navigation.navigate(USERDETAIL, { user })
+        navigation.navigate(USERDETAIL, { userID: user.id })
     }
     
     const renderItem = (item: { item: JSX.IntrinsicAttributes & User; }) => {

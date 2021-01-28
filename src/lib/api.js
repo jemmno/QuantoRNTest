@@ -8,3 +8,7 @@ const axiosInstance = axios.create(config);
 export function getUsers(pagination) {
     return axiosInstance.get(`/users?page=${pagination.page}&per_page=${pagination.per_page}`)
 }
+
+export function getUserDetail(userID) {
+  return axiosInstance.get(`/users/${userID}`)
+}
