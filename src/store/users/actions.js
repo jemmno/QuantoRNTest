@@ -1,6 +1,8 @@
 import * as types from './action-types';
 import { getUsers } from '../../lib/api';
 
+const GENERAL_ERROR = 'No se pudo cargar Usuarios';
+
 export function requestUsers() {
     return (dispatch, getState) => {
         const { USERS } = getState()
@@ -10,7 +12,7 @@ export function requestUsers() {
             dispatch({
                 type: types.REQUEST,
             });
-            pagination.page++
+            if(!USERS.errorMessage) pagination.page++
             getUsers(pagination)
                 .then((response) => {
                     let { data: { data: apiData, page, total_pages } } = response;
@@ -23,7 +25,7 @@ export function requestUsers() {
                     });
                 })
                 .catch((err) => {
-                    dispatch({ type: types.FAILURE });
+                    dispatch({ type: types.FAILURE, payload: {message: GENERAL_ERROR} });
                 });
         }
     };

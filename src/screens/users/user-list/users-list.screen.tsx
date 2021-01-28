@@ -2,18 +2,18 @@ import React, { useEffect } from 'react';
 import { ActivityIndicator, Button, StyleSheet, Text, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import ListEmpty from '../../../components/ListEmpty';
 import User, { iUser } from '../../../models/user';
 import { requestUsers } from '../../../store/users/actions';
 import { UserListItem } from './user-list-item.component';
 import { useNavigation } from '@react-navigation/native';
 import { USERDETAIL } from '../../../routers/constants';
 import { ScaledSheet } from 'react-native-size-matters';
+import { ListEmpty } from '../../../components/ListEmpty';
 
 export const UserListScreen = (): React.ReactElement => {
     const dispatch = useDispatch();
     const navigation = useNavigation();
-    const { data, loading } = useSelector((state: any) => state.USERS);
+    const { data, loading, errorMessage } = useSelector((state: any) => state.USERS);
     const getUsers = () => (dispatch(requestUsers()))
 
     useEffect(() => {
@@ -38,7 +38,7 @@ export const UserListScreen = (): React.ReactElement => {
         <View style={styles.footer}>
             { loading &&
                 <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <Text style={styles.footerText}>Cargando más...</Text>
+                    { data.length !== 0 && <Text style={styles.footerText}>Cargando más...</Text> }
                     <ActivityIndicator size='small' />
                 </View>
             }
@@ -50,14 +50,13 @@ export const UserListScreen = (): React.ReactElement => {
             data={data}
             keyExtractor={keyExtractor}
             renderItem={renderItem}
-            extraData={data}
             onEndReached={getUsers}
             onEndReachedThreshold={0.9}
             ItemSeparatorComponent={renderSeparator}
             ListFooterComponent={renderActivityIndicator}
             ListEmptyComponent={
                 <ListEmpty
-                    message={'Sin Usuarios'}
+                    message={errorMessage || 'Sin Usuarios'} onPressRetry={getUsers}
                 />
             }
             contentContainerStyle={data.length === 0 ? styles.centerEmptySet : styles.contentContainer }

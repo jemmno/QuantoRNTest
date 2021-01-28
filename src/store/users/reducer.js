@@ -8,7 +8,8 @@ const initialState = {
         per_page: ITEMS_PER_PAGE,
         total_pages: null
     },    
-    loading: false
+    loading: false,
+    errorMessage: null,
 };
 
 export default (state = initialState, action = {}) => {
@@ -17,6 +18,7 @@ export default (state = initialState, action = {}) => {
             return {
                 ...state,
                 loading: true,
+                errorMessage: null
             };
         case types.SUCESS:
             return {
@@ -27,7 +29,8 @@ export default (state = initialState, action = {}) => {
         case types.FAILURE:
             return {
                 ...state,
-                isFetching: false,
+                loading: false,
+                errorMessage: action.payload.message
             };
         default:
             return state;
