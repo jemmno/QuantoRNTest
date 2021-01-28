@@ -1,26 +1,28 @@
 import React from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
-import { Avatar } from '../../../components/Avatar';
-import User from '../../../models/user';
+import { Button, Text, View } from 'react-native';
+import { ScaledSheet } from 'react-native-size-matters';
+import Avatar, { Sizes } from '../../../components/Avatar';
+import User, { iUser } from '../../../models/user';
+import Theme from '../../../config/Theme';
 
 interface Props {
-    user: User,
+    user: iUser,
     onPressUser: any
 }
 export const UserListItem = (props: Props): React.ReactElement => {
     const {user, onPressUser} = props;
-    const fullName = `${user.first_name} ${user.last_name}`
+    const currentUser = new User(user);
     const onPressShowBtn = () => {
         onPressUser(user)
     }
     return (
         <View style={styles.container}>
             <View style={styles.avatarContainer}>
-                <Avatar uri={user.avatar} />
+                <Avatar uri={currentUser.avatar} size={Sizes.small}/>
             </View>
             <View style={styles.userDataContanier}>
-                <Text style={styles.fullName}>{fullName}</Text>
-                <Text style={styles.email}>{user.email}</Text>
+                <Text style={styles.fullName}>{currentUser.get_full_name()}</Text>
+                <Text style={styles.email}>{currentUser.email}</Text>
             </View>
             <View style={styles.btnContainer}>
                 <Button title='Ver' color={TEXT_BTN_COLOR} onPress={onPressShowBtn} />
@@ -29,12 +31,12 @@ export const UserListItem = (props: Props): React.ReactElement => {
     )
 }
 const TEXT_BTN_COLOR = '#37374e'
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
     container: {
         flex: 1,
         flexDirection: 'row',
-        marginHorizontal: 20,
-        marginVertical: 10
+        marginHorizontal: '20@s',
+        marginVertical: '10@vs'
     },
     centerEmptySet: {
         justifyContent: 'center',
@@ -50,15 +52,15 @@ const styles = StyleSheet.create({
     },
     userDataContanier: {
         flex: 5,
-        marginHorizontal: 20,
+        marginHorizontal: '20@s',
         flexDirection: 'column',
         justifyContent: 'center' 
     },
     fullName: {
-        fontSize: 18
+        fontSize: '18@s'
     },
     email: {
-        color: '#18adc7',
+        color: Theme.email,
         fontSize: 16
     }
 })

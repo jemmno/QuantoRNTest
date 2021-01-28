@@ -15,7 +15,7 @@ export const UsersStackNavigator = () : React.ReactElement =>
         backgroundColor: Theme.primary,
       },
       headerTintColor: Theme.navTitle,
-    }}>
+    }} initialRouteName={USERSLIST}>
       <UsersStack.Screen name={USERSLIST} component={UserListScreen} />
       <UsersStack.Screen name={USERDETAIL} component={UserDetailScreen} options={{headerLeft: () => {return null}}}/>
     </UsersStack.Navigator>

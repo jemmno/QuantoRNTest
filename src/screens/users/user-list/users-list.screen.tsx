@@ -3,12 +3,12 @@ import { ActivityIndicator, Button, StyleSheet, Text, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import ListEmpty from '../../../components/ListEmpty';
-import User from '../../../models/user';
-import user from '../../../models/user';
+import User, { iUser } from '../../../models/user';
 import { requestUsers } from '../../../store/users/actions';
 import { UserListItem } from './user-list-item.component';
 import { useNavigation } from '@react-navigation/native';
 import { USERDETAIL } from '../../../routers/constants';
+import { ScaledSheet } from 'react-native-size-matters';
 
 export const UserListScreen = (): React.ReactElement => {
     const dispatch = useDispatch();
@@ -22,11 +22,11 @@ export const UserListScreen = (): React.ReactElement => {
 
     const keyExtractor = (_item: any, index: { toString: () => any; }) => index.toString();
 
-    const handleOnPressUser = (user: User) => {
+    const handleOnPressUser = (user: iUser) => {
         navigation.navigate(USERDETAIL, { user })
     }
     
-    const renderItem = (item: { item: JSX.IntrinsicAttributes & user; }) => {
+    const renderItem = (item: { item: JSX.IntrinsicAttributes & User; }) => {
         return <UserListItem user={item.item} onPressUser={handleOnPressUser}/>
     }
 
@@ -60,12 +60,12 @@ export const UserListScreen = (): React.ReactElement => {
                     message={'Sin Usuarios'}
                 />
             }
-            contentContainerStyle={data.length === 0 ? styles.centerEmptySet : { flexGrow: 1, paddingBottom: 10 }}
+            contentContainerStyle={data.length === 0 ? styles.centerEmptySet : styles.contentContainer }
         />
     )
 }
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
     centerEmptySet: {
         justifyContent: 'center',
         alignItems: 'center',
@@ -75,12 +75,16 @@ const styles = StyleSheet.create({
         height: 1,
         width: "86%",
         backgroundColor: "#CED0CE",
-        marginHorizontal: 20
+        marginHorizontal: '20@s'
     },
     footer: {
-        padding: 15,
+        padding: '15@s',
     },
     footerText: {
         fontWeight: '600',
+    },
+    contentContainer: {
+        flexGrow: 1, 
+        paddingBottom: '10@vs'
     }
 })

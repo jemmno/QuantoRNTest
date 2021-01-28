@@ -5,5 +5,6 @@ export default Theme = {
   iconSubtle: '#dcdfe7',
   textSubtle: '#000011',
   disabled: '#9b9a99',
-  navTitle: '#fff'
+  navTitle: '#fff',
+  email: '#18adc7',
 };

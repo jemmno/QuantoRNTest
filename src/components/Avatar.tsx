@@ -1,25 +1,35 @@
 import React from 'react';
 import { Image, StyleSheet } from 'react-native';
-import { scale } from 'react-native-size-matters';
+import { scale, ScaledSheet } from 'react-native-size-matters';
+
+export enum Sizes {
+    small = 50,
+    medium = 100,
+    big = 150
+}
 
 interface Props {
-    uri: string
+    uri: string,
+    size: Sizes
 }
-export const Avatar = (props: Props): React.ReactElement => {
+
+const Avatar = (props: Props): React.ReactElement => {
     return (
         <Image source={{uri: props.uri}}
-            style={styles.avatar}
+            style={styles(props).avatar}
         />
     )
 }
 
+export default Avatar;
+
 const AVATAR_BORDER_COLOR = '#c13b61';
 
-const styles = StyleSheet.create({
+const styles = (props: Props) => ScaledSheet.create({
     avatar: {
-        width: scale(50), 
-        height: scale(50), 
-        borderRadius: (scale(50)) / 2,
+        width: `${props.size}@s`, 
+        height: `${props.size}@s`, 
+        borderRadius: (scale(props.size)) / 2,
         borderColor: AVATAR_BORDER_COLOR,
         borderWidth: 4
     },
